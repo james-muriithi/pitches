@@ -1,8 +1,7 @@
-from . import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
-from . import login_manager
+from . import login_manager,db
 
 class User(UserMixin, db.Model):
     '''
@@ -11,13 +10,14 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
+    name = db.Column(db.String(255))
     email = db.Column(db.String(255),unique = True,index = True)
     role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(255))
-    about = db.Column(db.Text())
+    about = db.Column(db.Text)
     avatar = db.Column(db.String(64))
 
-    pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
+    # pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
@@ -27,11 +27,11 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
-        self.pass_secure = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
 
 
     def verify_password(self,password):
-        return check_password_hash(self.pass_secure,password)
+        return check_password_hash(self.password_hash,password)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -53,7 +53,7 @@ class Pitch(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    comments = db.relationship('Comments', backref='pitch', lazy="dynamic")  
+    comments = db.relationship('Comment', backref='pitch', lazy="dynamic")  
     votes = db.relationship('Vote', backref='pitch', lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)

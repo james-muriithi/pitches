@@ -12,6 +12,7 @@
                         <h2 class="fw-bold text-center fs-5">Signup</h2>
                         <div class="pt-5">
                             {% include 'form-errors.html' %}
+                            {% include 'messages.html' %}
                             <form action method="POST">
                                 {{ form.csrf_token }}
                                 <div class="form-group">
