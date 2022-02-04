@@ -40,7 +40,7 @@
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
                         {% if current_user.avatar %}
-                        <img src="{{url_for('static/uploads', filename='{{current_user.avatar}}')}}"
+                        <img src="{{url_for('static', filename=current_user.avatar)}}"
                         alt="username" class="user-pic rounded-circle">
                         {% else %}
                         <span class="user-pic rounded-circle border d-flex align-items-center justify-content-center">
