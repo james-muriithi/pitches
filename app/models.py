@@ -14,20 +14,25 @@ class User(db.Model):
     about = db.Column(db.Text())
     avatar = db.Column(db.String(64))
 
+    pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
+
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
 
-class Pitch(db.model):
+class Pitch(db.Model):
     '''
     Pitches table
     '''
+    __tablename__ = 'pitches'
+    
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String(255))
     description = db.Column(db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    user = db.relationship('User', backref="pitches", lazy="dynamic")
+    comments = db.relationship('Comments', backref='pitch', lazy="dynamic")  
+    votes = db.relationship('Vote', backref='pitch', lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
@@ -39,7 +44,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     picture_path = db.Column(db.String(64))
-    post = db.relationship('Pitch', backref='category', lazy='dynamic')
+    pitch = db.relationship('Pitch', backref='category', lazy='dynamic')
 
     # get all categories
     @staticmethod
@@ -64,7 +69,15 @@ class Vote(db.Model):
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    pitch = db.relationship('Pitch', backref='votes', lazy="dynamic")
+
+class Comment(db.Model):
+    '''comments table'''
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+    comment = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, index=True, default=datetime.utcnow)  
 
 class Role(db.Model):
     '''
