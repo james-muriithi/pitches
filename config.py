@@ -9,7 +9,7 @@ class Config:
     DB_PASSWORD = config('DB_PASSWORD', default="")
     DB = 'pitches'
     
-    DATABASE_URI = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@localhost/{DB}'
+    SQLALCHEMY_DATABASE_URI = f'postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@localhost/{DB}'
 
     SECRET_KEY = config('SECRET_KEY', default="")
 
