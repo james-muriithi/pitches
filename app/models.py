@@ -1,7 +1,10 @@
 from . import db
 from datetime import datetime
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin
+from . import login_manager
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     '''
     User tables
     '''
@@ -17,6 +20,25 @@ class User(db.Model):
     pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
+
+    @property
+    def password(self):
+        raise AttributeError('You cannot read the password attribute')
+
+    @password.setter
+    def password(self, password):
+        self.pass_secure = generate_password_hash(password)
+
+
+    def verify_password(self,password):
+        return check_password_hash(self.pass_secure,password)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    def __repr__(self):
+        return f'User {self.username}'   
 
 
 class Pitch(db.Model):
