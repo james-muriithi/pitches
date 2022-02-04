@@ -10,16 +10,7 @@
                     <div class="pitch-card px-3 py-4 bg-white">
                         <h2 class="fw-bold text-center fs-5">Login</h2>
                         <div class="pt-5">
-                            {% if form.errors|length > 0 %}
-                            <div class="">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <button type="button" class="btn-close btn-sm text-xs" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    {% for field, errors in form.errors.items() %}
-                                    <div class="">{{ form[field].label }}: {{ ', '.join(errors) }}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            {% endif %}
+                            {% include 'form-errors.html' %}
                             <form action method="POST">
                                 {{ form.csrf_token }}
                                 <div class="form-group">

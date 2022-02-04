@@ -11,22 +11,24 @@
                     <div class="pitch-card px-3 py-4 bg-white">
                         <h2 class="fw-bold text-center fs-5">Signup</h2>
                         <div class="pt-5">
-                            <form action="" class="">
+                            {% include 'form-errors.html' %}
+                            <form action method="POST">
+                                {{ form.csrf_token }}
                                 <div class="form-group">
                                     <label for="" class="form-label text-sm">Email</label>
-                                    <input type="text" class="form-control" placeholder="john@doe.com">
+                                    <input type="text" class="form-control" placeholder="john@doe.com" name="email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="form-label text-sm">Username</label>
-                                    <input type="text" class="form-control" placeholder="username">
+                                    <input type="text" class="form-control" placeholder="username" name="username" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="form-label text-sm">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="john doe">
+                                    <input type="text" class="form-control" placeholder="john doe" name="name" required>
                                 </div>
                                 <div class="form-group pt-2">
                                     <label for="" class="form-label text-sm">Password</label>
-                                    <input type="password" class="form-control">
+                                    <input type="password" class="form-control" name="password" required>
                                 </div>
                                 
                                 <div class="text-center pt-5">
