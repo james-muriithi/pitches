@@ -1,5 +1,5 @@
 from crypt import methods
-from flask import render_template
+from flask import render_template,redirect, url_for
 from . import auth
 from .forms import LoginForm
 
@@ -7,7 +7,7 @@ from .forms import LoginForm
 def index():
     form = LoginForm()
     if form.validate_on_submit():
-        return form.data
+        return redirect(url_for('auth.index'))
     return render_template('login.html', form = form)
 
 @auth.route('/signup', methods = ['GET', 'POST'])
