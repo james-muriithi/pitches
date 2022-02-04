@@ -17,7 +17,7 @@ def create_app(config_name):
 
     # register blueprint
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
     # Initializing flask extensions
     bootstrap.init_app(app)
