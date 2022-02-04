@@ -22,6 +22,10 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
     @property
+    def first_name(self):
+        return self.name.split()[0]
+
+    @property
     def password(self):
         raise AttributeError('You cannot read the password attribute')
 
