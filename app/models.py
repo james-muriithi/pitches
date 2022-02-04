@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
     about = db.Column(db.Text)
     avatar = db.Column(db.String(64))
 
-    # pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
+    pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 

@@ -5,7 +5,12 @@
 <section id="latest-pitches" class="py-5 px-1 px-lg-3">
     <div class="container-fluid mt-5">
         <div class="section-title">
-            <h2 class="fw-bold text-center fs-5">Latest Pitches</h2>
+            <h2 class="fw-bold text-center fs-5">
+                Latest Pitches
+                {% if current_user.is_authenticated %}
+                <button class="btn btn-primary px-4 float-end">Create Pitch</button>
+                {% endif %}
+            </h2>
             <div class="pitches row mt-5 mx-0">
                 {% for x in range(6) %}
                 <div class="col-xl-3 col-md-4 mb-3 col-sm-6">

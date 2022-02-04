@@ -42,7 +42,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item bg-primary text-white" href="#">Dashboard</a>
+                        <a class="dropdown-item bg-primary text-white" href="{{url_for('main.dashboard')}}">Dashboard</a>
+                        <a class="dropdown-item bg-primary text-white" href="{{url_for('main.profile')}}">Profile</a>
                         <div class="dropdown-divider bg-white mx-3"></div>
                         <a class="dropdown-item bg-primary text-white d-flex align-item-center" href="{{url_for('auth.logout')}}">
                             Logout
