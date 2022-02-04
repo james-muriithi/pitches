@@ -62,6 +62,18 @@ class Pitch(db.Model):
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
+    @property
+    def formatted_time(self):
+        from datetime import datetime
+        return self.created_at.strftime("%b %d, %Y")
+
+    @staticmethod
+    def get_all_pitches():
+        return Pitch.query.all()
+
+    def __repr__(self):
+        return f'Pitch {self.title}'  
+
 class Category(db.Model):
     '''
     Pitch categories table
@@ -69,15 +81,13 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    picture_path = db.Column(db.String(64))
-    pitch = db.relationship('Pitch', backref='category', lazy='dynamic')
 
-    # get all categories
+    pitches = db.relationship('Pitch', backref="category", lazy="dynamic")
+
     @staticmethod
     def get_all_categories():
         return Category.query.all()
 
-    # save category
     def save_category(self):
         db.session.add(self)
         db.session.commit()

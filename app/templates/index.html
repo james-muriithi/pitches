@@ -8,18 +8,20 @@
             <h2 class="fw-bold text-center fs-5">
                 Latest Pitches
                 {% if current_user.is_authenticated %}
-                <button class="btn btn-primary px-4 float-end">Create Pitch</button>
+                <button class="btn btn-primary px-4 float-end" data-bs-toggle="modal"
+                    data-bs-target="#createPitchModal">Create Pitch</button>
                 {% endif %}
             </h2>
             <div class="pitches row mt-5 mx-0">
-                {% for x in range(6) %}
+                {% for pitch in pitches %}
                 <div class="col-xl-3 col-md-4 mb-3 col-sm-6">
                     {% include 'pitch-card.html' %}
-                 </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 </section>
 <!-- end latest pitches -->
+{% include 'create-pitch.html' %}
 {% endblock %}
