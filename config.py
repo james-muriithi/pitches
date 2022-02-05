@@ -1,3 +1,4 @@
+from email.policy import default
 import os
 from decouple import config
 
@@ -18,7 +19,7 @@ class Config:
 
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL").replace("postgres://", "postgresql://", 1) 
+    SQLALCHEMY_DATABASE_URI = config("DATABASE_URL", default="").replace("postgres://", "postgresql://", 1)
 
 
 class DevelopmentConfig(Config):
