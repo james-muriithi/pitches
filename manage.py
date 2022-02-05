@@ -4,7 +4,7 @@ from decouple import config
 from flask_migrate import Migrate, MigrateCommand
 from app.models import User, Role, Pitch, Comment, Category, Vote
 
-app = create_app(config('env', default="development"))
+app = create_app(config('ENV', default="development"))
 
 manager = Manager(app)
 manager.add_command('server',Server)
