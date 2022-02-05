@@ -75,7 +75,7 @@ class Pitch(db.Model):
 
     @staticmethod
     def get_all_pitches():
-        return Pitch.query.all()
+        return Pitch.query.order_by(Pitch.created_at.desc()).all()
 
     def __repr__(self):
         return f'Pitch {self.title}'  
