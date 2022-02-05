@@ -18,3 +18,7 @@ class ProfileForm(FlaskForm):
     username = StringField('username',validators=[InputRequired()])
     name = StringField('Name',validators=[InputRequired()])
     about = TextAreaField('About')
+
+class CommentForm(FlaskForm):
+    """CommentForm"""
+    comment = TextAreaField("Comment", validators=[InputRequired()])    

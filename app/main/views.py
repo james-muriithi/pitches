@@ -1,10 +1,10 @@
-from flask import redirect, render_template, url_for, flash, request
+from flask import redirect, render_template, url_for, flash, request, abort
 from flask_login import current_user, login_required
 from wtforms.validators import ValidationError
 from . import main
 from .. import db, photos
-from .forms import PitchForm, ProfileForm
-from ..models import Category, Pitch, User
+from .forms import PitchForm, ProfileForm, CommentForm
+from ..models import Category, Pitch, User, Comment
 
 @main.route('/')
 def index():
@@ -63,6 +63,30 @@ def pitch_create():
         db.session.commit()
 
     return redirect(url_for('main.index'))
+
+
+@main.route('/pitch/<id>')
+def pitch_show(id):
+    form = CommentForm()
+    pitch = Pitch.query.get(id)
+    if pitch:
+        return render_template('single-pitch.html', pitch=pitch, form = form, Comment = Comment)
+    abort(404)  
+
+@main.route('/pitch/<id>/comment', methods=["POST"])
+@login_required
+def save_comment(id):
+    pitch = Pitch.query.get(id)
+    form = CommentForm()
+
+    if pitch and form.validate_on_submit():
+        comment = Comment(comment=form.comment.data, pitch=pitch, user=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        flash("Comment was added successfully", "success")
+        return redirect(url_for('main.pitch_show', id=pitch.id))
+
+    abort(404)        
 
 
 def validate_email(email):

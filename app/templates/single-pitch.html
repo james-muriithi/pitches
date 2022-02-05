@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- section latest pitches -->
+<section id="latest-pitches" class="py-5 px-1 px-lg-3">
+    <div class="container-fluid mt-5">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body p-4">
+                        <div class="meta">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    {% if pitch.user.avatar %}
+                                    <img src="{{url_for('static', filename=pitch.user.avatar)}}"
+                                    alt="username" class="img-40 rounded-circle">
+                                    {% else %}
+                                    <span class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
+                                        <span class="material-icons fs-4 text-primary">person</span>
+                                    </span>
+                                    {% endif %}
+                                    <div class="name text-sm ps-2">
+                                        <div class="fw-bold">{{pitch.user.name}}</div>
+                                        <span class="text-muted text-xs">{{pitch.formatted_time}}</span>
+                                    </div>
+                                </div>
+                                <a href="#"
+                                    class="read-more text-sm ms-auto badge bg-primary text-white">{{pitch.category.name}}</a>
+                            </div>
+                        </div>
+
+                        <div class="pitch-details pt-4">
+                            <h1 class="fw-bold fs-4">{{pitch.title}}</h1>
+                            <p class="pt-4 text-muted">
+                                {{pitch.description}}
+                            </p>
+
+                            <div class="voting d-flex align-items-center justify-content-between mt-5">
+                                <div class="">
+                                    <button class="btn d-flex align-items-center">
+                                        <span class="material-icons fs-5">message</span>
+                                        <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
+                                    </button>
+                                </div>
+                                <div class="d-flex">
+                                    <button class="btn d-flex align-items-center">
+                                        <span class="material-icons fs-4 text-primary">expand_less</span>
+                                        <span class="text-xxs">{{pitch.votes.filter_by(vote=1).count()}}</span>
+                                    </button>
+                                    <button class="btn d-flex align-items-center">
+                                        <span class="material-icons fs-4">expand_more</span>
+                                        <span class="text-xxs">{{pitch.votes.filter_by(vote=-1).count()}}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 mt-md-0 mt-4">
+                <div class="card px-3 py-4">
+                    <h2 class="fw-bold fs-4 text-center text-secondary">Leave a comment</h2>
+                    <form action="{{url_for('main.save_comment', id=pitch.id)}}" method="POST">
+                        {% include 'form-errors.html' %}
+                            {% include 'messages.html' %}
+                            {{ form.csrf_token }}
+                        <div class="form-group">
+                            <label for="" class="form-label">Comment</label>
+                            <textarea name="comment" required class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="text-center pt-4">
+                            <button class="btn btn-primary px-4">
+                                Post
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <h3 class="fw-bold my-3 fs-4">Comments</h3>
+                {% with comments = pitch.comments.order_by(Comment.created_at.desc()).all() %}
+                {% if comments|length > 0 %}
+                {% for comment in comments %}
+                <div class="card pb-2 bg-transparent border-primary mb-3">
+                    <div class="card-body">
+                        <div class="meta">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    {% if comment.user.avatar %}
+                                    <img src="{{url_for('static', filename=comment.user.avatar)}}"
+                                    alt="username" class="img-30 rounded-circle">
+                                    {% else %}
+                                    <span class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
+                                        <span class="material-icons fs-4 text-primary">person</span>
+                                    </span>
+                                    {% endif %}
+                                    <div class="name text-sm ps-2">
+                                        <div class="fw-bold">{{comment.user.name}}</div>
+                                    </div>
+                                </div>
+                                <span class="read-more text-sm ms-auto">{{comment.created_at.strftime("%b %d, %Y %H:%m")}}</span>
+                            </div>
+                        </div>
+
+                        <div class="comment pt-3">
+                            <span class="text-muted">{{comment.comment}}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p class="text-start">
+                    No comments yet
+                </p>
+                {% endif %}
+                {% endwith %}
+                
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end latest pitches -->
+
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+
+{% endblock %}
