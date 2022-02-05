@@ -8,9 +8,9 @@
         </div>
     </div>
     <div class="details pt-3">
-        <h2 class="title fw-bold fs-4">
+        <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="title fw-bold fs-4">
             {{pitch.title}}
-        </h2>
+        </a>
         <p class="description text-muted text-sm">
             {{pitch.description}}
         </p>
@@ -22,16 +22,7 @@
                     <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
                 </button>
             </div>
-            <div class="d-flex">
-                <button class="btn d-flex align-items-center">
-                    <span class="material-icons fs-4 text-primary">expand_less</span>
-                    <span class="text-xxs">{{pitch.votes.filter_by(vote=1).count()}}</span>
-                </button>
-                <button class="btn d-flex align-items-center">
-                    <span class="material-icons fs-4">expand_more</span>
-                    <span class="text-xxs">{{pitch.votes.filter_by(vote=-1).count()}}</span>
-                </button>
-            </div>
+            {% include 'voting.html' %}
         </div>
 
         <div class="dropdown-divider"></div>
@@ -51,7 +42,7 @@
                         {{pitch.user.name}}
                     </span>
                 </div>
-                <a href="#" class="read-more text-sm ms-auto">Read More</a>
+                <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="read-more text-sm ms-auto">Read More</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,14 @@
+{% if current_user.is_authenticated %}
+<div class="d-flex">
+    <a class="btn d-flex align-items-center upvote {{ 'disabled' if pitch.user_voted(user_id=current_user.id) }}" 
+    href="{{url_for('main.pitch_upvote', id=pitch.id)}}">
+        <span class="material-icons fs-4 text-primary">expand_less</span>
+        <span class="text-xxs">{{pitch.votes.filter_by(vote=1).count()}}</span>
+    </a>
+    <a class="btn d-flex align-items-center {{ 'disabled' if pitch.user_voted(user_id=current_user.id) }}" 
+        href="{{url_for('main.pitch_downvote', id=pitch.id)}}">
+        <span class="material-icons fs-4">expand_more</span>
+        <span class="text-xxs">{{pitch.votes.filter_by(vote=-1).count()}}</span>
+    </a>
+</div>
+{% endif %}

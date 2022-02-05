@@ -12,10 +12,11 @@
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
                                     {% if pitch.user.avatar %}
-                                    <img src="{{url_for('static', filename=pitch.user.avatar)}}"
-                                    alt="username" class="img-40 rounded-circle">
+                                    <img src="{{url_for('static', filename=pitch.user.avatar)}}" alt="username"
+                                        class="img-40 rounded-circle">
                                     {% else %}
-                                    <span class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
+                                    <span
+                                        class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
                                         <span class="material-icons fs-4 text-primary">person</span>
                                     </span>
                                     {% endif %}
@@ -42,16 +43,7 @@
                                         <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
                                     </button>
                                 </div>
-                                <div class="d-flex">
-                                    <button class="btn d-flex align-items-center">
-                                        <span class="material-icons fs-4 text-primary">expand_less</span>
-                                        <span class="text-xxs">{{pitch.votes.filter_by(vote=1).count()}}</span>
-                                    </button>
-                                    <button class="btn d-flex align-items-center">
-                                        <span class="material-icons fs-4">expand_more</span>
-                                        <span class="text-xxs">{{pitch.votes.filter_by(vote=-1).count()}}</span>
-                                    </button>
-                                </div>
+                                {% include 'voting.html' %}
                             </div>
                         </div>
                     </div>
@@ -62,8 +54,8 @@
                     <h2 class="fw-bold fs-4 text-center text-secondary">Leave a comment</h2>
                     <form action="{{url_for('main.save_comment', id=pitch.id)}}" method="POST">
                         {% include 'form-errors.html' %}
-                            {% include 'messages.html' %}
-                            {{ form.csrf_token }}
+                        {% include 'messages.html' %}
+                        {{ form.csrf_token }}
                         <div class="form-group">
                             <label for="" class="form-label">Comment</label>
                             <textarea name="comment" required class="form-control" rows="3"></textarea>
@@ -90,10 +82,11 @@
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
                                     {% if comment.user.avatar %}
-                                    <img src="{{url_for('static', filename=comment.user.avatar)}}"
-                                    alt="username" class="img-30 rounded-circle">
+                                    <img src="{{url_for('static', filename=comment.user.avatar)}}" alt="username"
+                                        class="img-30 rounded-circle">
                                     {% else %}
-                                    <span class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
+                                    <span
+                                        class="img-40 rounded-circle border d-flex align-items-center justify-content-center">
                                         <span class="material-icons fs-4 text-primary">person</span>
                                     </span>
                                     {% endif %}
@@ -101,7 +94,8 @@
                                         <div class="fw-bold">{{comment.user.name}}</div>
                                     </div>
                                 </div>
-                                <span class="read-more text-sm ms-auto">{{comment.created_at.strftime("%b %d, %Y %H:%m")}}</span>
+                                <span class="read-more text-sm ms-auto">{{comment.created_at.strftime("%b %d, %Y
+                                    %H:%m")}}</span>
                             </div>
                         </div>
 
@@ -117,7 +111,7 @@
                 </p>
                 {% endif %}
                 {% endwith %}
-                
+
             </div>
         </div>
 
@@ -129,5 +123,9 @@
 
 {% block scripts %}
 {{super()}}
-
+<script>
+    $(function(){
+        
+    })
+</script>
 {% endblock %}

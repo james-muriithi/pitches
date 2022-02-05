@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError
 from . import main
 from .. import db, photos
 from .forms import PitchForm, ProfileForm, CommentForm
-from ..models import Category, Pitch, User, Comment
+from ..models import Category, Pitch, User, Comment, Vote
 
 @main.route('/')
 def index():
@@ -87,6 +87,33 @@ def save_comment(id):
         return redirect(url_for('main.pitch_show', id=pitch.id))
 
     abort(404)        
+
+@main.route('/pitch/<id>/upvote')
+@login_required
+def pitch_upvote(id):
+    return vote(pitch_id=id, value=1)
+
+
+@main.route('/pitch/<id>/downvote')
+@login_required
+def pitch_downvote(id):
+    return vote(pitch_id=id, value=-1)           
+
+
+def vote(pitch_id, value=1):
+    pitch = Pitch.query.get(pitch_id)
+
+    if pitch and not pitch.user_voted(user_id=current_user.id):
+        vote = Vote(vote=value, pitch=pitch, user=current_user)
+        db.session.add(vote)
+        db.session.commit()
+        flash("Your vote was recorded successfully", "success")
+        return redirect(url_for('main.pitch_show', id=pitch.id))
+    elif pitch and pitch.user_voted(user_id=current_user.id):
+        flash("You have already voted", "danger")
+        return redirect(url_for('main.pitch_show', id=pitch.id))
+
+    abort(404)
 
 
 def validate_email(email):

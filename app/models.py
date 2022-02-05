@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
 
     pitches = db.relationship('Pitch', backref="user", lazy="dynamic")
     comments = db.relationship('Comment', backref="user", lazy="dynamic")
+    votes = db.relationship('Vote', backref="user", lazy="dynamic")
 
     created_at = db.Column(db.DateTime, index=True, default=datetime.now)
 
@@ -67,6 +68,10 @@ class Pitch(db.Model):
     def formatted_time(self):
         from datetime import datetime
         return self.created_at.strftime("%b %d, %Y")
+
+
+    def user_voted(self, user_id):
+        return self.votes.filter_by(user_id=user_id).count() > 0    
 
     @staticmethod
     def get_all_pitches():
