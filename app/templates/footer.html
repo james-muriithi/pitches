@@ -10,9 +10,9 @@
         </div>
         <div class="col-sm-8 col-md-4 order-2 order-md-3 mt-md-0 mt-5">
             <a href="/" class="pe-2 text-white">Home</a>
-            <a href="#" class="px-2 text-white">Business</a>
-            <a href="#" class="px-2 text-white">Products</a>
-            <a href="#" class="px-2 text-white">Pickup Lines</a>
+            <a href="{{url_for('main.category_show', id=1)}}" class="px-2 text-white">Business</a>
+            <a href="{{url_for('main.category_show', id=2)}}" class="px-2 text-white">Products</a>
+            <a href="{{url_for('main.category_show', id=3)}}" class="px-2 text-white">Pickup Lines</a>
         </div>
     </div>
 </footer>

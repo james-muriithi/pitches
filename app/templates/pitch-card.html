@@ -1,4 +1,4 @@
-<div class="pitch-card px-3 pt-4 pb-3">
+<div class="pitch-card px-3 pt-4 pb-3 h-100 d-flex flex-column">
     <div class="d-flex">
         <div class="category">
             <a href="#" class="read-more text-sm ms-auto badge bg-primary text-white">{{pitch.category.name}}</a>
@@ -7,42 +7,46 @@
             <span class="text-muted">{{pitch.formatted_time}}</span>
         </div>
     </div>
-    <div class="details pt-3">
-        <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="title fw-bold fs-4">
-            {{pitch.title}}
-        </a>
-        <p class="description text-muted text-sm">
-            {{pitch.description}}
-        </p>
-
-        <div class="voting d-flex align-items-center justify-content-between">
-            <div class="">
-                <button class="btn d-flex align-items-center">
-                    <span class="material-icons fs-5">message</span>
-                    <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
-                </button>
-            </div>
-            {% include 'voting.html' %}
+    <div class="details pt-3 flex-grow-1 d-flex flex-column justify-content-between">
+        <div class="">
+            <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="title fw-bold fs-4">
+                {{pitch.title}}
+            </a>
+            <p class="description text-muted text-sm">
+                {{pitch.description|truncate(255)}}
+            </p>
         </div>
 
-        <div class="dropdown-divider"></div>
-
-        <div class="meta">
-            <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                        {% if current_user.avatar %}
-                        <img src="{{url_for('static', filename=current_user.avatar)}}"
-                        alt="username" class="user-pic rounded-circle">
-                        {% else %}
-                        <span class="user-pic rounded-circle border d-flex align-items-center justify-content-center">
-                            <span class="material-icons fs-4 text-primary">person</span>
-                        </span>
-                        {% endif %}
-                    <span class="name text-xs ps-1">
-                        {{pitch.user.name}}
-                    </span>
+        <div class="">
+            <div class="voting d-flex align-items-center justify-content-between">
+                <div class="">
+                    <button class="btn d-flex align-items-center">
+                        <span class="material-icons fs-5">message</span>
+                        <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
+                    </button>
                 </div>
-                <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="read-more text-sm ms-auto">Read More</a>
+                {% include 'voting.html' %}
+            </div>
+    
+            <div class="dropdown-divider"></div>
+    
+            <div class="meta">
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                            {% if current_user.avatar %}
+                            <img src="{{url_for('static', filename=current_user.avatar)}}"
+                            alt="username" class="user-pic rounded-circle">
+                            {% else %}
+                            <span class="user-pic rounded-circle border d-flex align-items-center justify-content-center">
+                                <span class="material-icons fs-4 text-primary">person</span>
+                            </span>
+                            {% endif %}
+                        <span class="name text-xs ps-1">
+                            {{pitch.user.name}}
+                        </span>
+                    </div>
+                    <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="read-more text-sm ms-auto">Read More</a>
+                </div>
             </div>
         </div>
     </div>

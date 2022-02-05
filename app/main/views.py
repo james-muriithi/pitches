@@ -13,7 +13,8 @@ def index():
 
     pitches = Pitch.get_all_pitches()
 
-    return render_template('index.html', pitchForm=pitchForm, categories=categories, pitches=pitches)
+    return render_template('index.html', pitchForm=pitchForm, 
+        categories=categories, pitches=pitches, title= 'Latest Pitches')
 
 
 @main.route('/dashboard')
@@ -65,6 +66,19 @@ def pitch_create():
     return redirect(url_for('main.index'))
 
 
+@main.route('/category/<id>')
+def category_show(id):
+    category = Category.query.get(id)
+    pitchForm = PitchForm()
+    categories = Category.get_all_categories()
+
+    if category:
+        pitches = category.pitches.all()
+        return render_template('index.html', pitches=pitches, 
+            pitchForm=pitchForm, categories=categories, title= f'{category.name} Pitches' )  
+    abort(404)
+
+
 @main.route('/pitch/<id>')
 def pitch_show(id):
     form = CommentForm()
@@ -108,10 +122,10 @@ def vote(pitch_id, value=1):
         db.session.add(vote)
         db.session.commit()
         flash("Your vote was recorded successfully", "success")
-        return redirect(url_for('main.pitch_show', id=pitch.id))
+        return redirect(request.url)
     elif pitch and pitch.user_voted(user_id=current_user.id):
         flash("You have already voted", "danger")
-        return redirect(url_for('main.pitch_show', id=pitch.id))
+        return redirect(request.url)
 
     abort(404)
 
