@@ -11,16 +11,22 @@
                         <div class="d-flex flex-column align-items-center text-center">
                             <div
                                 class="position-relative profile-user-pic rounded-circle border d-flex align-items-center justify-content-center">
-                                <form action="" method="post" id="form-image" enctype="multipart/form-data">
-                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" class="d-none" />
+                                <form action="{{url_for('main.update_avatar')}}" method="post" id="form-image" enctype="multipart/form-data">
+                                    <input type='file' id="imageUpload" name="avatar" required accept=".png, .jpg, .jpeg" class="d-none" />
                                     <label for="imageUpload" class="position-absolute bottom-0 end-0">
-                                        <span class="material-icons text-primary">
+                                        <span class="material-icons text-primary bg-white rounded-circle">
                                             camera_alt
                                         </span>
                                     </label>
+                                    {% if current_user.avatar %}
+                                    <img src="{{url_for('static', filename=current_user.avatar)}}"
+                                    alt="username" class="user-pic rounded-circle profile-user-pic">
+                                    {% else %}
                                     <span class="d-block h-100 w-100">
                                         <span class="material-icons text-primary user-icon">person</span>
                                     </span>
+                                    {% endif %}
+                                    
                                 </form>
 
                             </div>
@@ -133,4 +139,9 @@
     </div>
 </section>
 <!-- end latest pitches -->
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+
 {% endblock %}

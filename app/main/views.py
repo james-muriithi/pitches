@@ -1,8 +1,8 @@
-from flask import redirect, render_template, url_for, flash
+from flask import redirect, render_template, url_for, flash, request
 from flask_login import current_user, login_required
 from wtforms.validators import ValidationError
 from . import main
-from .. import db
+from .. import db, photos
 from .forms import PitchForm, ProfileForm
 from ..models import Category, Pitch, User
 
@@ -35,9 +35,20 @@ def profile():
         db.session.commit()
         flash("Your details have been updated", "success")
         return redirect(url_for('main.profile'))
-        
+
     return render_template('profile.html', form=profile_form)
 
+
+@main.route('/profile/update_avatar',methods= ['POST'])
+@login_required
+def update_avatar():
+    if 'avatar' in request.files:
+        filename = photos.save(request.files['avatar'])
+        path = f'uploads/{filename}'
+        current_user.avatar = path
+        db.session.commit()
+
+    return redirect(url_for('main.profile'))
 
 @main.route('/pitch/create', methods=['POST'])
 @login_required
