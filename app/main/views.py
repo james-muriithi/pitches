@@ -17,12 +17,6 @@ def index():
         categories=categories, pitches=pitches, title= 'Latest Pitches')
 
 
-@main.route('/dashboard')
-@login_required
-def dashboard():
-    return 'dashboard'
-
-
 @main.route('/profile', methods=["GET","POST"])
 @login_required
 def profile():

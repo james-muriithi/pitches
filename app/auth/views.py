@@ -4,6 +4,7 @@ from . import auth
 from ..models import User
 from .. import db
 from .forms import LoginForm, SignupForm
+from ..email import mail_message
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -30,6 +31,9 @@ def signup():
         db.session.commit()
 
         # send email to user
+        mail_message("Welcome to Pitches","email/welcome_user",user.email,user=user)
+
+
         flash('User Account created successfully!', 'success')
         login_user(user)
         return redirect(request.args.get('next') or url_for('main.index'))
