@@ -8,10 +8,6 @@
         </div>
         <div class="modal-body">
             <div class="">
-                {% with form = pitchForm %}
-                    {% include 'form-errors.html' %}
-                {% endwith %}
-                {% include 'messages.html' %}
                 <form action="{{url_for('main.pitch_create')}}" method="POST" id="create-pitch-form">
                     {{ pitchForm.csrf_token }}
                     <div class="form-group">
