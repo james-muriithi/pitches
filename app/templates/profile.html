@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ <!-- section latest pitches -->
+ <section id="latest-pitches" class="py-5 px-1 px-lg-3">
+    <div class="container-fluid mt-5">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <div
+                                class="position-relative profile-user-pic rounded-circle border d-flex align-items-center justify-content-center">
+                                <form action="" method="post" id="form-image" enctype="multipart/form-data">
+                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" class="d-none" />
+                                    <label for="imageUpload" class="position-absolute bottom-0 end-0">
+                                        <span class="material-icons text-primary">
+                                            camera_alt
+                                        </span>
+                                    </label>
+                                    <span class="d-block h-100 w-100">
+                                        <span class="material-icons text-primary user-icon">person</span>
+                                    </span>
+                                </form>
+
+                            </div>
+                            <div class="mt-3">
+                                <h4>John Doe</h4>
+                                <p class="text-muted font-size-sm">@{{current_user.username}}</p>
+                                <p class="text-muted font-size-sm">Joined on: {{current_user.created_at.strftime("%b %d, %Y")}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3 p-3">
+                    <h2 class="fw-bold fs-3 text-center text-secondary">About Me</h2>
+                    <p class="pt-3 text-muted">
+                        {{current_user.about or 'No about'}}
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body p-4">
+                        <form action="" method="POST">
+                            {% include 'form-errors.html' %}
+                            {% include 'messages.html' %}
+                            {{ form.csrf_token }}
+                            <div class="form-group">
+                                <label for="" class="form-label text-sm">Email</label>
+                                <input type="text" class="form-control" placeholder="john@doe.com" required name="email" value="{{current_user.email}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="form-label text-sm">Username</label>
+                                <input type="text" class="form-control" placeholder="username" required name="username" value="{{current_user.username}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="form-label text-sm">Full Name</label>
+                                <input type="text" class="form-control" placeholder="john doe" required name="name" value="{{current_user.name}}">
+                            </div>
+                            <div class="form-group pt-2">
+                                <label for="" class="form-label text-sm">About Me</label>
+                                <textarea name="about" class="form-control" rows="3">{{current_user.about or ''}}</textarea>
+                            </div>
+
+                            <div class="text-center pt-5">
+                                <button class="btn btn-primary px-4">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2 class="fw-bold fs-3 text-center text-secondary">Your Pitches</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-responsive mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Comments </th>
+                                                <th scope="col">Likes</th>
+                                                <th scope="col">DisLikes</th>
+                                                <th scope="col">Created At</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% with pitches = current_user.pitches.all() %}
+                                            {% if pitches | length > 0 %}
+                                            {% for pitch in pitches %}
+                                            <tr>
+                                                <td>
+                                                    {{loop.index}}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="fw-bold">
+                                                        {{pitch.title}}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="fw-bold">
+                                                        {{pitch.category.name}}
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">{{pitch.comments.count()}}</td>
+                                                <td class="text-center">{{pitch.votes.filter_by(vote=-1).count()}}</td>
+                                                <td class="text-center">{{pitch.votes.filter_by(vote=1).count()}}</td>
+                                                <td>{{pitch.created_at.strftime("%b %d, %Y")}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    You have no pitches yet
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endwith %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end latest pitches -->
+{% endblock %}

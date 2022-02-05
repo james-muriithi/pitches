@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField,PasswordField,BooleanField, StringField
+from wtforms import EmailField,PasswordField,BooleanField, StringField, TextAreaField
 from wtforms.validators import InputRequired,ValidationError
 from ..models import User
 
@@ -20,6 +20,7 @@ class SignupForm(FlaskForm):
     username = StringField('username',validators=[InputRequired()])
     name = StringField('Name',validators=[InputRequired()])
     password = PasswordField('Password', validators=[InputRequired()])
+    about = TextAreaField('About')
 
     def validate_email(self,data_field):
             if User.query.filter_by(email = data_field.data).first():

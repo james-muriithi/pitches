@@ -1,7 +1,5 @@
-from unicodedata import category
-from click import option
-from flask_wtf import FlaskForm
-from wtforms import TextAreaField, StringField, SelectField
+from flask_wtf import FlaskForm 
+from wtforms import TextAreaField, StringField, SelectField, EmailField
 from wtforms.validators import InputRequired
 
 
@@ -12,3 +10,11 @@ class PitchForm(FlaskForm):
     title = StringField("Title", validators=[InputRequired()])
     category = SelectField("Category", validators=[InputRequired()], choices=[])
     description = TextAreaField("Description", validators=[InputRequired()])
+
+
+class ProfileForm(FlaskForm):
+    """Profile form"""
+    email = EmailField('Email',validators=[InputRequired()])
+    username = StringField('username',validators=[InputRequired()])
+    name = StringField('Name',validators=[InputRequired()])
+    about = TextAreaField('About')

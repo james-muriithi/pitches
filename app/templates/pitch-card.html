@@ -1,7 +1,7 @@
 <div class="pitch-card px-3 pt-4 pb-3">
     <div class="d-flex">
         <div class="category">
-            <span class="text-muted">{{pitch.category.name}}</span>
+            <a href="#" class="read-more text-sm ms-auto badge bg-primary text-white">{{pitch.category.name}}</a>
         </div>
         <div class="date ms-auto">
             <span class="text-muted">{{pitch.formatted_time}}</span>
@@ -19,17 +19,17 @@
             <div class="">
                 <button class="btn d-flex align-items-center">
                     <span class="material-icons fs-5">message</span>
-                    <span class="text-xxs ps-1">0</span>
+                    <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
                 </button>
             </div>
             <div class="d-flex">
                 <button class="btn d-flex align-items-center">
                     <span class="material-icons fs-4 text-primary">expand_less</span>
-                    <span class="text-xxs">0</span>
+                    <span class="text-xxs">{{pitch.votes.filter_by(vote=1).count()}}</span>
                 </button>
                 <button class="btn d-flex align-items-center">
                     <span class="material-icons fs-4">expand_more</span>
-                    <span class="text-xxs">0</span>
+                    <span class="text-xxs">{{pitch.votes.filter_by(vote=-1).count()}}</span>
                 </button>
             </div>
         </div>

@@ -105,6 +105,8 @@ class Vote(db.Model):
     pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    # pitch = db.relationship('Pitch', backref='votes', lazy='dynamic')
+
 
 class Comment(db.Model):
     '''comments table'''
