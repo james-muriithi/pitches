@@ -51,6 +51,7 @@
             </div>
             <div class="col-md-4 mb-3 mt-md-0 mt-4">
                 <div class="card px-3 py-4">
+                    {% if current_user.is_authenticated %}
                     <h2 class="fw-bold fs-4 text-center text-secondary">Leave a comment</h2>
                     <form action="{{url_for('main.save_comment', id=pitch.id)}}" method="POST">
                         {% include 'form-errors.html' %}
@@ -66,6 +67,12 @@
                             </button>
                         </div>
                     </form>
+                    {% else %}
+                    <div class="py-5 text-center">
+                        <h5 class="pb-3 fw-bold">Please login to comment</h5>
+                        <a href="{{url_for('auth.index')}}" class="btn btn-primary px-4">Login</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -109,13 +109,13 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="#" class="fw-bold">
+                                                    <a href="{{url_for('main.category_show', id=pitch.category.id)}}" class="fw-bold">
                                                         {{pitch.category.name}}
                                                     </a>
                                                 </td>
                                                 <td class="text-center">{{pitch.comments.count()}}</td>
-                                                <td class="text-center">{{pitch.votes.filter_by(vote=-1).count()}}</td>
                                                 <td class="text-center">{{pitch.votes.filter_by(vote=1).count()}}</td>
+                                                <td class="text-center">{{pitch.votes.filter_by(vote=-1).count()}}</td>
                                                 <td>{{pitch.created_at.strftime("%b %d, %Y")}}</td>
                                             </tr>
                                             {% endfor %}

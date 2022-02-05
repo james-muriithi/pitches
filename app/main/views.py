@@ -125,7 +125,7 @@ def vote(pitch_id, value=1):
         return redirect(request.url)
     elif pitch and pitch.user_voted(user_id=current_user.id):
         flash("You have already voted", "danger")
-        return redirect(request.url)
+        return redirect(request.referrer or url_for('main.pitch_show', id=pitch.id))
 
     abort(404)
 

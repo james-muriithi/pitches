@@ -1,7 +1,7 @@
 <div class="pitch-card px-3 pt-4 pb-3 h-100 d-flex flex-column">
     <div class="d-flex">
         <div class="category">
-            <a href="#" class="read-more text-sm ms-auto badge bg-primary text-white">{{pitch.category.name}}</a>
+            <a href="{{url_for('main.category_show', id=pitch.category.id)}}" class="read-more text-sm ms-auto badge bg-primary text-white">{{pitch.category.name}}</a>
         </div>
         <div class="date ms-auto">
             <span class="text-muted">{{pitch.formatted_time}}</span>
