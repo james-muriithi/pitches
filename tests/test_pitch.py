@@ -4,8 +4,8 @@ from app.models import Pitch
 
 class TestPitch(unittest.TestCase):
     def setUp(self):
-        self.new_post = Pitch(title="Test Post Title",
+        self.new_pitch = Pitch(title="Test Post Title",
                              description="Test Content body", user_id=3)
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.new_post, Pitch))
+        self.assertTrue(isinstance(self.new_pitch, Pitch))
