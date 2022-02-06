@@ -22,7 +22,9 @@ def index():
 def profile():
     profile_form = ProfileForm()
     if profile_form.validate_on_submit():
-        current_user.query.update({'name':profile_form.name.data, 'about': profile_form.about.data})
+        User.query.filter_by(id=current_user.id).update({
+            'name':profile_form.name.data, 'about': profile_form.about.data
+            })
         db.session.commit()
         flash("Your details have been updated", "success")
         return redirect(url_for('main.profile'))
