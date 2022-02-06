@@ -25,8 +25,7 @@ def profile():
         validate_email(profile_form.email.data)
         validate_username(profile_form.username.data)
 
-        current_user.query.update({'email': profile_form.email.data, 'username':profile_form.username.data,
-                    'name':profile_form.name.data, 'about': profile_form.about.data})
+        current_user.query.update({'name':profile_form.name.data, 'about': profile_form.about.data})
         db.session.commit()
         flash("Your details have been updated", "success")
         return redirect(url_for('main.profile'))

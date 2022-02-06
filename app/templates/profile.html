@@ -54,11 +54,11 @@
                             {{ form.csrf_token }}
                             <div class="form-group">
                                 <label for="" class="form-label text-sm">Email</label>
-                                <input type="text" class="form-control" placeholder="john@doe.com" required name="email" value="{{current_user.email}}">
+                                <input type="text" class="form-control" placeholder="john@doe.com" name="email" readonly value="{{current_user.email}}">
                             </div>
                             <div class="form-group">
                                 <label for="" class="form-label text-sm">Username</label>
-                                <input type="text" class="form-control" placeholder="username" required name="username" value="{{current_user.username}}">
+                                <input type="text" class="form-control" placeholder="username" readonly name="username" value="{{current_user.username}}">
                             </div>
                             <div class="form-group">
                                 <label for="" class="form-label text-sm">Full Name</label>
