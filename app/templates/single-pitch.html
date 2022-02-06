@@ -11,7 +11,7 @@
                         <div class="meta">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    {% if pitch.user.avatar %}
+                                    {% if pitch.user.avatar and path_exists(current_user.avatar) %}
                                     <img src="{{url_for('static', filename=pitch.user.avatar)}}" alt="username"
                                         class="img-40 rounded-circle">
                                     {% else %}
@@ -88,7 +88,7 @@
                         <div class="meta">
                             <div class="d-flex align-items-center">
                                 <div class="d-flex align-items-center">
-                                    {% if comment.user.avatar %}
+                                    {% if comment.user.avatar and path_exists(current_user.avatar) %}
                                     <img src="{{url_for('static', filename=comment.user.avatar)}}" alt="username"
                                         class="img-30 rounded-circle">
                                     {% else %}

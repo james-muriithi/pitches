@@ -20,10 +20,10 @@
         <div class="">
             <div class="voting d-flex align-items-center justify-content-between">
                 <div class="">
-                    <button class="btn d-flex align-items-center">
+                    <a href="{{url_for('main.pitch_show', id=pitch.id)}}" class="btn d-flex align-items-center">
                         <span class="material-icons fs-5">message</span>
                         <span class="text-xxs ps-1">{{pitch.comments.count()}}</span>
-                    </button>
+                    </a>
                 </div>
                 {% include 'voting.html' %}
             </div>
@@ -33,7 +33,7 @@
             <div class="meta">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                            {% if current_user.avatar %}
+                            {% if current_user.avatar and path_exists(current_user.avatar) %}
                             <img src="{{url_for('static', filename=current_user.avatar)}}"
                             alt="username" class="user-pic rounded-circle">
                             {% else %}

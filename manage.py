@@ -3,11 +3,19 @@ from flask_script import Manager,Server
 from decouple import config
 from flask_migrate import Migrate, MigrateCommand
 from app.models import User, Role, Pitch, Comment, Category, Vote
+import os
 
 app = create_app(config('ENV', default="development"))
 
 manager = Manager(app)
 manager.add_command('server',Server)
+
+def path_exists(path):
+    return os.path.exists(path)
+
+@app.context_processor
+def handle_context():
+    return dict(path_exists=path_exists)
 
 @manager.shell
 def make_shell_context():

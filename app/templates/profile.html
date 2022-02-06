@@ -18,7 +18,7 @@
                                             camera_alt
                                         </span>
                                     </label>
-                                    {% if current_user.avatar %}
+                                    {% if current_user.avatar and path_exists(current_user.avatar) %}
                                     <img src="{{url_for('static', filename=current_user.avatar)}}"
                                     alt="username" class="user-pic rounded-circle profile-user-pic">
                                     {% else %}
