@@ -22,15 +22,20 @@ def index():
 def profile():
     profile_form = ProfileForm()
     if profile_form.validate_on_submit():
-        validate_email(profile_form.email.data)
-        validate_username(profile_form.username.data)
-
         current_user.query.update({'name':profile_form.name.data, 'about': profile_form.about.data})
         db.session.commit()
         flash("Your details have been updated", "success")
         return redirect(url_for('main.profile'))
 
     return render_template('profile.html', form=profile_form)
+
+@main.route('/dashboard', methods=["GET"])
+@login_required
+def dashboard():
+    if not current_user.is_admin:
+        abort(403)
+    users = User.query.order_by(User.created_at.desc()).limit(100).all()
+    return render_template('dashboard.html', users=users)
 
 
 @main.route('/profile/update_avatar',methods= ['POST'])
@@ -121,14 +126,3 @@ def vote(pitch_id, value=1):
         return redirect(request.referrer or url_for('main.pitch_show', id=pitch.id))
 
     abort(404)
-
-
-def validate_email(email):
-    user = User.query.filter_by(email = email).first()
-    if user and user.id != current_user.id:
-        raise ValidationError('Email already exists')
-
-def validate_username(username):
-    user = User.query.filter_by(username = username).first()
-    if user and user.id != current_user.id:
-        raise ValidationError('Username is already taken')
